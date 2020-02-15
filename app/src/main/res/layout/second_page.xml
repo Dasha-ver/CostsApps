@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/SkyBlue"
+    tools:showIn="@layout/second_page">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_view_headline_black_24dp" />
+
+            <Button
+                android:id="@+id/go_cash_for_sec"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@id/image_button"
+                android:background="@color/SkyBlue"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/cash"
+                android:textColor="@color/White"
+                android:textSize="10dp" />
+
+            <Button
+                android:id="@+id/go_income_for_sec"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@id/go_cash_for_sec"
+                android:background="@color/SkyBlue"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/change_income"
+                android:textColor="@color/White"
+                android:textSize="10dp" />
+
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/other"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/other" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/other"
+        android:textColor="@color/Chocolate"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/hintSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/otherSec"
+        android:textColor="@color/Chocolate"
+        android:textSize="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/rv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hintSec"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            android:id="@+id/other_man"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:textColorHint="@color/LightSlateGray"
+            android:textSize="25dp"
+
+            />
+
+        <Button
+            android:id="@+id/first_button"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/other_man"
+            android:background="@drawable/for_first_button"
+            android:text="@string/button"
+            android:textAllCaps="false"
+            android:textColor="@color/White"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rv_but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_edit"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/control_button"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text"
+            android:text="@string/control"
+            android:textAllCaps="false"
+            android:textColor="@color/Chocolate"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/control_income"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/control_button"
+            android:background="@drawable/edit_text"
+            android:text="@string/controlIncome"
+            android:textAllCaps="false"
+            android:textColor="@color/Chocolate"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_but"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical" />
+
+</RelativeLayout>

@@ -1,0 +1,115 @@
+<resources>
+    <string name="app_name">CostsApp</string>
+    <string name="man">00.00 AZN</string>
+    <string name="button">Добавить</string>
+    <string name="other">Здесь Вы можете ввести общую сумму расходов,</string>
+    <string name="otherSec">либо перейти к категориям</string>
+    <string name="control"><font>Контроль</font>\n\<font>расходов</font></string>
+    <string name="controlIncome"><font>Контроль</font>\n\<font>доходов</font></string>
+    <string name="controlIncomeThird">Контроль доходов</string>
+    <string name="controlCosts">Контроль расходов</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="money">Выберите Вашу валюту:</string>
+    <string name="enter">Продолжить</string>
+    <string name="enter_money">Введите Ваш</string>
+    <string name="enter_money_second">ежемесячный доход</string>
+    <string name="hint_first_string">Здесь Вы можете ввести Ваш ежемесячный доход,</string>
+    <string name="hint_second_string">чтобы подсчитать разницу доходов и расходов.</string>
+    <string name="hint_third_page">Здесь Вы можете выбрать период</string>
+    <string name="hintSec_third_page">для расчёта расходов.</string>
+    <string name="go">Пропустить этот шаг</string>
+    <string name="day">Расходы за день</string>
+    <string name="week">Расходы за неделю</string>
+    <string name="month">Расходы за месяц</string>
+    <string name="year">Расходы за год</string>
+    <string name="all_period">Расходы за весь период</string>
+    <string name="third">Введите дату:</string>
+    <string name="category">Выберите категорию:</string>
+    <string name="but_third">Показать</string>
+    <string name="start_data">Начало периода</string>
+    <string name="finish_data">Окончание периода</string>
+    <string name="fours_text">Показать доходы за:</string>
+    <string name="fours_text_period">Показать доходы за период:</string>
+    <string name="different">Разница доход/расход:</string>
+    <string name="cash">Мой кошелёк</string>
+    <string name="cash_res">В Вашем кошельке:</string>
+    <string name="change_income">Изменить доходы</string>
+
+
+    <string-array name="spinner_val">
+        <item>Манаты</item>
+        <item>Доллары</item>
+        <item>Евро</item>
+        <item>Рубли</item>
+        <item>Гривны</item>
+    </string-array>
+
+    <string-array name="spinner_category">
+        <item>Расходы по всем категориям</item>
+        <item>Еда</item>
+        <item>Бытовая химия и косметика</item>
+        <item>Развлечения и образование</item>
+        <item>Коммунальные платежи</item>
+        <item>Одежда</item>
+        <item>Электроника</item>
+    </string-array>
+
+    <string-array name="spinner_day">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <string-array name="spinner_month">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+
+    <string-array name="spinner_year">
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+    </string-array>
+
+
+</resources>
+
