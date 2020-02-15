@@ -135,7 +135,7 @@
             android:background="@drawable/edit_text"
             android:text="@string/control"
             android:textAllCaps="false"
-            android:textColor="@color/Chocolate"
+            android:textColor="@color/SkyBlue"
             android:textSize="15dp" />
 
         <Button
@@ -148,7 +148,7 @@
             android:background="@drawable/edit_text"
             android:text="@string/controlIncome"
             android:textAllCaps="false"
-            android:textColor="@color/Chocolate"
+            android:textColor="@color/SkyBlue"
             android:textSize="15dp" />
 
     </RelativeLayout>

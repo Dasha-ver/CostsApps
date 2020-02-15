@@ -6,12 +6,23 @@
     android:background="@color/SkyBlue"
     tools:showIn="@layout/third_page">
 
+    <ImageButton
+        android:id="@+id/sp_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_home_black_24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        />
+
     <TextView
         android:id="@+id/third_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/sp_home"
         android:text="@string/category"
         android:textColor="@color/White"
         android:textSize="33dp"

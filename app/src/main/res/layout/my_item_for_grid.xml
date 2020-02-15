@@ -10,74 +10,38 @@
     tools:context=".SecondActivity">
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_width="165dp"
+        android:layout_height="120dp"
+        android:layout_margin="5dp"
         card_view:cardCornerRadius="10dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
                 android:id="@+id/rel_l_ava"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
+                >
 
-                <ImageView
-                    android:id="@+id/avatar"
-                    android:layout_width="130dp"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="10dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/clothes" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_below="@+id/avatar"
-                    android:layout_centerHorizontal="true"
-                    android:text=""
-                    android:textColor="@color/Black"
-                    android:textSize="10dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rel_l_ava"
+                android:layout_height="42dp"
+                android:text="ggg"
+                android:textColor="@color/SkyBlue"
+                android:textSize="15dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
+
+            <ImageButton
+                android:id="@+id/avatar"
+                android:layout_width="165dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/name"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp">
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:background="@drawable/clothes" />
 
-                <EditText
-                    android:id="@+id/man_grid"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:padding="3dp"
-                    android:textColorHint="@color/LightSlateGray"
-                    android:textSize="15dp" />
 
-                <Button
-                    android:id="@+id/grid_button"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/man_grid"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/for_first_button"
-                    android:text="@string/button"
-                    android:textAllCaps="false"
-                    android:textColor="@color/White"
-                    android:textSize="15dp" />
-            </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

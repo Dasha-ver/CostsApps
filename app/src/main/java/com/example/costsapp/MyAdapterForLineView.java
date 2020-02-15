@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,39 +15,28 @@ class MyAdapterForLineView extends RecyclerView.Adapter<MyAdapterForLineView.MyV
 
     private List<Costs> costsList;
     private GetMyItem mGetMyItem;
-    String amount;
     String checkedCategory;
-    String hint;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView avatar;
+        ImageButton avatar;
         TextView name;
-        EditText expenses;
-        Button check;
-
 
         MyViewHolder(final View view) {
             super(view);
             avatar = view.findViewById(R.id.avatar_liner);
             name = view.findViewById(R.id.name_liner);
-            expenses = view.findViewById(R.id.man_liner);
-            check = view.findViewById(R.id.liner_button);
 
-
-            check.setOnClickListener(new View.OnClickListener() {
+            avatar.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    amount = expenses.getText().toString();
                     checkedCategory = name.getText().toString();
-                    mGetMyItem.getMyItem(view, amount, checkedCategory);///передача суммы и категории через интерфейс
-                    expenses.setText("");
+                    mGetMyItem.getMyItem(view, checkedCategory);// категории через интерфейс
                 }
             });
         }
     }
 
-    public MyAdapterForLineView(List<Costs> costsList, String hint, GetMyItem getMyItem) {
-        this.hint = hint;
+    public MyAdapterForLineView(List<Costs> costsList, GetMyItem getMyItem) {
         this.costsList = costsList;
         mGetMyItem = getMyItem;
     }
@@ -63,8 +53,6 @@ class MyAdapterForLineView extends RecyclerView.Adapter<MyAdapterForLineView.MyV
         Costs c = costsList.get(position);
         holder.name.setText(c.getName());
         holder.avatar.setImageResource(c.getAvatarId());
-        holder.expenses.setHint(hint);
-
 
     }
 

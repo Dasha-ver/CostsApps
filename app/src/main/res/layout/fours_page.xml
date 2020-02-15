@@ -12,12 +12,23 @@
         android:layout_height="match_parent"
         android:background="@color/SkyBlue">
 
+        <ImageButton
+            android:id="@+id/inc_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_home_black_24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            />
         <TextView
             android:id="@+id/fours"
+            android:layout_below="@id/inc_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:text="@string/fours_text"
             android:textColor="@color/White"
             android:textSize="35dp"

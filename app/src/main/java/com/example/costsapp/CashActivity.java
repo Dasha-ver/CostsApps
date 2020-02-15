@@ -1,10 +1,12 @@
 package com.example.costsapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +22,7 @@ public class CashActivity extends Activity {
     Calendar calendar;
     Button cashButton;
     EditText cashEdit;
+    ImageButton home;
     private int monthNow;
     private int yearNow;
     private Realm bankCodeRealm;
@@ -31,6 +34,7 @@ public class CashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cash_page);
 
+        home = findViewById(R.id.cash_home);
         cashEdit = findViewById(R.id.cash_edit);
         cashButton = findViewById(R.id.cash_button);
 
@@ -295,6 +299,14 @@ public class CashActivity extends Activity {
                     cashEdit.setText(cashResult);
                     cashValue.clear();
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CashActivity.this, SecondActivity.class);
+                startActivity(intent);
             }
         });
     }

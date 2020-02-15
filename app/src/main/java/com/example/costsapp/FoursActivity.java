@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class FoursActivity extends Activity {
     String codeResult;
     Spinner incomeMonth;
     Spinner incomeYear;
+    ImageButton home;
     Button foursButton;
     Button goCash;
     Button goSpent;
@@ -47,6 +49,7 @@ public class FoursActivity extends Activity {
         realm = Realm.getDefaultInstance();
         bankCodeRealm = Realm.getDefaultInstance();
 
+        home = findViewById(R.id.inc_home);
         incomeMonth = findViewById(R.id.spinner_month_f);
         incomeYear = findViewById(R.id.spinner_year_f);
         foursButton = findViewById(R.id.b_fours);
@@ -133,6 +136,14 @@ public class FoursActivity extends Activity {
                     }
                 }
 
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FoursActivity.this, SecondActivity.class);
+                startActivity(intent);
             }
         });
 

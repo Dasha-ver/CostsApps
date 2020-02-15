@@ -5,5 +5,5 @@ import android.view.View;
 //интерфейс для передачи информации из адаптера
 
 public interface GetMyItem {
-    void getMyItem(View view, String value, String category);
+    void getMyItem(View view, String category);
 }

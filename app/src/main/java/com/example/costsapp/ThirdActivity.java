@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ThirdActivity extends Activity {
     String secSpinnerMonth;
     String searchCategory;
     EditText thirdEdit;
+    ImageButton home;
     Button thirdBut;
     Button income;
     Button goCash;
@@ -47,6 +49,7 @@ public class ThirdActivity extends Activity {
         setContentView(R.layout.third_page);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        home = findViewById(R.id.sp_home);
         thirdEdit = findViewById(R.id.third_edit);
         daySpinner = findViewById(R.id.spinner_day);
         monthSpinner = findViewById(R.id.spinner_month);
@@ -330,6 +333,14 @@ public class ThirdActivity extends Activity {
                             "Введите дату корректно!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (ThirdActivity.this, SecondActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -1,14 +1,19 @@
 package com.example.costsapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +43,9 @@ public class SecondActivity extends Activity implements GetMyItem {
     Button changeIncome;
     Button controlButton;
     EditText generalExpenses;
+    final Context context = this;
+    String value = "";
+    String myCategory = "";
     private int dayNow;
     private int monthNow;
     private int yearNow;
@@ -90,35 +98,59 @@ public class SecondActivity extends Activity implements GetMyItem {
         //вызываем конструктор адаптера, через интерфейс получаем расходы введённые в категориях,
         //проверяем была ли первой введена точка или пустое ли поле, если нет -
         //получаем текущий день, месяц, год и добавляем сумму в выбранную категорию
-        a = new MyAdapter(list, codeResult, new GetMyItem() {
+        a = new MyAdapter(list, new GetMyItem() {
             @Override
-            public void getMyItem(View view, String value, String category) {
-                if (value.contains(".")) {
-                    int myInt = value.indexOf(".");
-                    if (myInt == 0) {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
-                        toast.show();
-                    } else {
-                        dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                        monthNow = calendar.get(Calendar.MONTH) + 1;
-                        yearNow = calendar.get(Calendar.YEAR);
-                        addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                    }
-                }
-                else if (value.equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Введите сумму", Toast.LENGTH_SHORT);
-                    toast.show();
-                } else {
-                    dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                    monthNow = calendar.get(Calendar.MONTH) + 1;
-                    yearNow = calendar.get(Calendar.YEAR);
-                    addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                }
+            public void getMyItem(View view, String category) {
+
+                myCategory = category;
+                               LayoutInflater li = LayoutInflater.from(context);
+                               View promptsView = li.inflate(R.layout.prompt, null);
+                              AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+                              mDialogBuilder.setView(promptsView);
+                              final EditText userInput = (EditText) promptsView.findViewById(R.id.input_text);
+                                mDialogBuilder
+                                       .setCancelable(false)
+                                      .setPositiveButton("OK",
+                                              new DialogInterface.OnClickListener() {
+                                          public void onClick(DialogInterface dialog, int id) {
+                                                        //Вводим текст и отображаем в строке ввода на основном экране:
+                                                        value = userInput.getText().toString();
+                                                       if (value.contains(".")) {
+                                                           int myInt = value.indexOf(".");
+                                                           if (myInt == 0) {
+                                                               Toast toast = Toast.makeText(getApplicationContext(),
+                                                                       "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
+                                                                toast.show();
+                                                            } else {
+                                                                dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                               monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                                yearNow = calendar.get(Calendar.YEAR);
+                                                                addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                            }
+                                                        } else if (value.equals("")) {
+                                                           Toast toast = Toast.makeText(getApplicationContext(),
+                                                                    "Введите сумму", Toast.LENGTH_SHORT);
+                                                           toast.show();
+                                                       } else {
+                                                            dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                           monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                           yearNow = calendar.get(Calendar.YEAR);
+                                                           addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                       }
+                                                   }
+                                                })
+                                     .setNegativeButton("Отмена",
+                                             new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                                                      dialog.cancel();
+            }
+                                               });
+                AlertDialog alertDialog = mDialogBuilder.create();
+                //и отображаем его:
+                alertDialog.show();
+
             }
         });
-
         rv.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         rv.setAdapter(a);
         prepareCategoriesData();
@@ -127,35 +159,61 @@ public class SecondActivity extends Activity implements GetMyItem {
         //вызываем конструктор адаптера, через интерфейс получаем расходы введённые в категориях,
         //проверяем была ли первой введена точка или пустое ли поле, если нет -
         //получаем текущий день, месяц, год и добавляем сумму в выбранную категорию
+
         butForView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (flag) {
                     butForView.setImageResource(R.drawable.ic_view_module_black_24dp);
-                    lineAdapter = new MyAdapterForLineView(list, codeResult, new GetMyItem() {
+                    lineAdapter = new MyAdapterForLineView(list, new GetMyItem() {
                         @Override
-                        public void getMyItem(View view, String value, String category) {
-                            if (value.contains(".")) {
-                                int myInt = value.indexOf(".");
-                                if (myInt == 0) {
-                                    Toast toast = Toast.makeText(getApplicationContext(),
-                                            "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                } else {
-                                    dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                                    monthNow = calendar.get(Calendar.MONTH) + 1;
-                                    yearNow = calendar.get(Calendar.YEAR);
-                                    addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                                }
-                            } else if (value.equals("")) {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Введите сумму", Toast.LENGTH_SHORT);
-                                toast.show();
-                            } else {
-                                dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                                monthNow = calendar.get(Calendar.MONTH) + 1;
-                                yearNow = calendar.get(Calendar.YEAR);
-                                addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                            }
+                        public void getMyItem(View view, String category) {
+                            myCategory = category;
+                            LayoutInflater li = LayoutInflater.from(context);
+                            View promptsView = li.inflate(R.layout.prompt, null);
+                            AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+                            mDialogBuilder.setView(promptsView);
+                            final EditText userInput = (EditText) promptsView.findViewById(R.id.input_text);
+                            mDialogBuilder
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //Вводим текст и отображаем в строке ввода на основном экране:
+                                                    value = userInput.getText().toString();
+                                                    if (value.contains(".")) {
+                                                        int myInt = value.indexOf(".");
+                                                        if (myInt == 0) {
+                                                            Toast toast = Toast.makeText(getApplicationContext(),
+                                                                    "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                        } else {
+                                                            dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                            monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                            yearNow = calendar.get(Calendar.YEAR);
+                                                            addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                        }
+                                                    } else if (value.equals("")) {
+                                                        Toast toast = Toast.makeText(getApplicationContext(),
+                                                                "Введите сумму", Toast.LENGTH_SHORT);
+                                                        toast.show();
+                                                    } else {
+                                                        dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                        monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                        yearNow = calendar.get(Calendar.YEAR);
+                                                        addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                    }
+                                                }
+                                            })
+                                    .setNegativeButton("Отмена",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                            AlertDialog alertDialog = mDialogBuilder.create();
+                            //и отображаем его:
+                            alertDialog.show();
+
                         }
                     });
                     LinearLayoutManager lm = new LinearLayoutManager(getApplicationContext());
@@ -164,31 +222,56 @@ public class SecondActivity extends Activity implements GetMyItem {
                     rv.setAdapter(lineAdapter);
                 } else {
                     butForView.setImageResource(R.drawable.ic_view_headline_black_24dp);
-                    a = new MyAdapter(list, codeResult, new GetMyItem() {
+                    a = new MyAdapter(list, new GetMyItem() {
                         @Override
-                        public void getMyItem(View view, String value, String category) {
-                            if (value.contains(".")) {
-                                int myInt = value.indexOf(".");
-                                if (myInt == 0) {
-                                    Toast toast = Toast.makeText(getApplicationContext(),
-                                            "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                } else {
-                                    dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                                    monthNow = calendar.get(Calendar.MONTH) + 1;
-                                    yearNow = calendar.get(Calendar.YEAR);
-                                    addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                                }
-                            } else if (value.equals("")) {
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Введите сумму", Toast.LENGTH_SHORT);
-                                toast.show();
-                            } else {
-                                dayNow = calendar.get(Calendar.DAY_OF_MONTH);
-                                monthNow = calendar.get(Calendar.MONTH) + 1;
-                                yearNow = calendar.get(Calendar.YEAR);
-                                addSpentMoney(dayNow, monthNow, yearNow, value, category);
-                            }
+                        public void getMyItem(View view, String category) {
+                            myCategory = category;
+                            LayoutInflater li = LayoutInflater.from(context);
+                            View promptsView = li.inflate(R.layout.prompt, null);
+                            AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(context);
+                            mDialogBuilder.setView(promptsView);
+                            final EditText userInput = (EditText) promptsView.findViewById(R.id.input_text);
+                            mDialogBuilder
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    //Вводим текст и отображаем в строке ввода на основном экране:
+                                                    value = userInput.getText().toString();
+                                                    if (value.contains(".")) {
+                                                        int myInt = value.indexOf(".");
+                                                        if (myInt == 0) {
+                                                            Toast toast = Toast.makeText(getApplicationContext(),
+                                                                    "Введите сумму корректно! Сумма не может начинаться с точки!", Toast.LENGTH_SHORT);
+                                                            toast.show();
+                                                        } else {
+                                                            dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                            monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                            yearNow = calendar.get(Calendar.YEAR);
+                                                            addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                        }
+                                                    } else if (value.equals("")) {
+                                                        Toast toast = Toast.makeText(getApplicationContext(),
+                                                                "Введите сумму", Toast.LENGTH_SHORT);
+                                                        toast.show();
+                                                    } else {
+                                                        dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+                                                        monthNow = calendar.get(Calendar.MONTH) + 1;
+                                                        yearNow = calendar.get(Calendar.YEAR);
+                                                        addSpentMoney(dayNow, monthNow, yearNow, value, myCategory);
+                                                    }
+                                                }
+                                            })
+                                    .setNegativeButton("Отмена",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                            AlertDialog alertDialog = mDialogBuilder.create();
+                            //и отображаем его:
+                            alertDialog.show();
+
                         }
                     });
                     rv.setLayoutManager(new GridLayoutManager(getApplicationContext(), numberOfColumns));
@@ -289,19 +372,19 @@ public class SecondActivity extends Activity implements GetMyItem {
         c = new Costs("Еда", R.drawable.food);
         list.add(c);
 
-        c = new Costs("Бытовая химия и косметика", R.drawable.cosmetics);
+        c = new Costs("Одежда", R.drawable.clothes);
         list.add(c);
 
-        c = new Costs("Развлечения и образование", R.drawable.entertainment);
+        c = new Costs("Электроника", R.drawable.electro);
         list.add(c);
 
         c = new Costs("Коммунальные платежи", R.drawable.comunalka);
         list.add(c);
 
-        c = new Costs("Одежда", R.drawable.clothes);
+        c = new Costs("Бытовая химия и косметика", R.drawable.cosmetics);
         list.add(c);
 
-        c = new Costs("Электроника", R.drawable.electro);
+        c = new Costs("Развлечения и образование", R.drawable.entertainment);
         list.add(c);
 
         a.notifyDataSetChanged();
@@ -328,7 +411,7 @@ public class SecondActivity extends Activity implements GetMyItem {
     }
 
     @Override
-    public void getMyItem(View view, String value, String category) {
+    public void getMyItem(View view, String category) {
 
     }
 }
