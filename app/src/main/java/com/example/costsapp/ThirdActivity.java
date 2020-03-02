@@ -1,16 +1,19 @@
 package com.example.costsapp;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Calendar;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -24,43 +27,39 @@ public class ThirdActivity extends Activity {
     int secSearchDay;
     int secSearchMonth;
     int secSearchYear;
-    String spinnerMonth;
-    String secSpinnerMonth;
     String searchCategory;
-    EditText thirdEdit;
-    ImageButton home;
-    Button thirdBut;
-    Button income;
+    Button start;
+    Button finish;
+    Button goIncome;
     Button goCash;
-    Spinner daySpinner;
-    Spinner monthSpinner;
-    Spinner yearSpinner;
-    Spinner categorySpinner;
-    Spinner secDaySpinner;
-    Spinner secMonthSpinner;
-    Spinner secYearSpinner;
+    Button thirdBut;
+    ImageButton home;
+    EditText thirdEdit;
+    Spinner mySpinner;
+    Calendar c;
+    DatePickerDialog dpd;
+    ArrayList<ThirdPageSpinnerInfo> mySpinnerInfo;
     private  String codeResult;
     private Realm bankCodeRealm;
     private Realm realm;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.third_page);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        home = findViewById(R.id.sp_home);
+        mySpinner = findViewById(R.id.spinner_category);
+        start = findViewById(R.id.third_but_start);
+        finish = findViewById(R.id.third_but_end);
         thirdEdit = findViewById(R.id.third_edit);
-        daySpinner = findViewById(R.id.spinner_day);
-        monthSpinner = findViewById(R.id.spinner_month);
-        yearSpinner = findViewById(R.id.spinner_year);
-        secDaySpinner = findViewById(R.id.spinner_day_second);
-        secMonthSpinner = findViewById(R.id.spinner_month_second);
-        secYearSpinner = findViewById(R.id.spinner_year_second);
-        categorySpinner = findViewById(R.id.spinner_category);
-        thirdBut = findViewById(R.id.button_third);
-        income = findViewById(R.id.button_third_income);
-        goCash = findViewById(R.id.cash_third);
+        thirdBut = findViewById(R.id.third_button);
+        home = findViewById(R.id.third_home);
+        goIncome = findViewById(R.id.third_go_income);
+        goCash = findViewById(R.id.third_go_cash);
+
+        mySpinnerInfo = spinnerList();
+        SpinnerAdapter Adapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item, mySpinnerInfo);
+        mySpinner.setAdapter(Adapter);
 
         Realm.init(getApplicationContext());
         bankCodeRealm = Realm.getDefaultInstance();
@@ -69,11 +68,65 @@ public class ThirdActivity extends Activity {
         showCode();//получаем банковский код
         thirdEdit.setHint(codeResult);
 
+        //слушатель на кнопку вызова DatePickerDialog для ввода начальной даты периода для расчёта
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                dpd = new DatePickerDialog(ThirdActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        searchDay = mDay;
+                        searchMonth = mMonth +1;
+                        searchYear = mYear;
+                    }
+                },year, month, day);
+                dpd.show();
+            }
+        });
+
+        //слушатель на кнопку вызова DatePickerDialog для ввода даты окончания периода для расчёта
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                dpd = new DatePickerDialog(ThirdActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int mYear, int mMonth, int mDay) {
+                        secSearchDay = mDay;
+                        secSearchMonth = mMonth +1;
+                        secSearchYear = mYear;
+                    }
+                },year, month, day);
+                dpd.show();
+            }
+        });
+
+        //слушатель на спиннер категорий
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (mySpinner.getSelectedItem() != null) {
+                    searchCategory = mySpinner.getSelectedItem().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         //добавляем слушатель на кнопку расчёта расходов, получаем результаты из спиннера,
-        //делаем выборку из БД рассчитываем результат
+        //делаем выборку из БД, рассчитываем результат
         thirdBut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getSpinnerResult();
                 if(searchMonth == secSearchMonth && searchYear == secSearchYear) {//если надо получить расходы в рамках одного года и месяца
                     if (searchCategory.equals("Расходы по всем категориям")) {//в расходах по всем категориям
                         ArrayList<Double> list = new ArrayList<>();
@@ -336,31 +389,46 @@ public class ThirdActivity extends Activity {
             }
         });
 
+        //слушатель на кнопку возврата домой
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (ThirdActivity.this, SecondActivity.class);
+                Intent intent = new Intent(ThirdActivity.this, SecondActivity.class);
                 startActivity(intent);
             }
         });
 
-        //добавляем слушатель на кнопку перехода в расчёт доходов
-        income.setOnClickListener(new View.OnClickListener() {
+        //слушатель на кнопку перехода в расчёт доходов
+        goIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (ThirdActivity.this, FoursActivity.class);
+                Intent intent = new Intent(ThirdActivity.this, FoursActivity.class);
                 startActivity(intent);
             }
         });
 
-        //добавляем слушатель на кнопку перехода в кошелёк
+        //слушатель на кнопку перехода в кошелёк
         goCash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (ThirdActivity.this, CashActivity.class);
+                Intent intent = new Intent(ThirdActivity.this, CashActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    //метод для добавления информации в спиннер
+    public ArrayList<ThirdPageSpinnerInfo> spinnerList() {
+        ArrayList<ThirdPageSpinnerInfo> mySpinnerInfo = new ArrayList<ThirdPageSpinnerInfo>();
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Расходы по всем категориям", R.drawable.other));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Еда", R.drawable.food));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Одежда", R.drawable.clothes));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Электроника", R.drawable.electro));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Коммунальные платежи", R.drawable.comunalka));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Бытовая химия и косметика", R.drawable.cosmetics));
+        mySpinnerInfo.add(new ThirdPageSpinnerInfo("Развлечения и образование", R.drawable.entertainment));
+
+        return mySpinnerInfo;
     }
 
     //метод для получения банковского кода
@@ -368,121 +436,6 @@ public class ThirdActivity extends Activity {
         RealmResults<BankCode> cods = bankCodeRealm.where(BankCode.class).findAll();
         for (BankCode b : cods) {
             codeResult = b.getCode();
-        }
-    }
-
-    //метод для получения и преобразования результатов спиннеров
-    public void getSpinnerResult() {
-        searchCategory = categorySpinner.getSelectedItem().toString();
-        spinnerMonth = monthSpinner.getSelectedItem().toString();
-        secSpinnerMonth = secMonthSpinner.getSelectedItem().toString();
-        String day = daySpinner.getSelectedItem().toString();
-        String year = yearSpinner.getSelectedItem().toString();
-        String secDay= secDaySpinner.getSelectedItem().toString();
-        String secYear = secYearSpinner.getSelectedItem().toString();
-        searchYear = Integer.valueOf(year);
-        searchDay = Integer.valueOf(day);
-        secSearchDay = Integer.valueOf(secDay);
-        secSearchYear = Integer.valueOf(secYear);
-
-        switch (spinnerMonth){
-            case "Январь":
-                searchMonth = 1;
-                break;
-
-            case "Февраль":
-                searchMonth = 2;
-                break;
-
-            case "Март":
-                searchMonth = 3;
-                break;
-
-            case "Апрель":
-                searchMonth = 4;
-                break;
-
-            case "Май":
-                searchMonth = 5;
-                break;
-
-            case "Июнь":
-                searchMonth = 6;
-                break;
-
-            case "Июль":
-                searchMonth = 7;
-                break;
-
-            case "Август":
-                searchMonth = 8;
-                break;
-
-            case "Сентябрь":
-                searchMonth = 9;
-                break;
-
-            case "Октябрь":
-                searchMonth = 10;
-                break;
-
-            case "Ноябрь":
-                searchMonth = 11;
-                break;
-
-            case "Декабрь":
-                searchMonth = 12;
-                break;
-        }
-
-        switch (secSpinnerMonth){
-            case "Январь":
-                secSearchMonth = 1;
-                break;
-
-            case "Февраль":
-                secSearchMonth = 2;
-                break;
-
-            case "Март":
-                secSearchMonth = 3;
-                break;
-
-            case "Апрель":
-                secSearchMonth = 4;
-                break;
-
-            case "Май":
-                secSearchMonth = 5;
-                break;
-
-            case "Июнь":
-                secSearchMonth = 6;
-                break;
-
-            case "Июль":
-                secSearchMonth = 7;
-                break;
-
-            case "Август":
-                secSearchMonth = 8;
-                break;
-
-            case "Сентябрь":
-                secSearchMonth = 9;
-                break;
-
-            case "Октябрь":
-                secSearchMonth = 10;
-                break;
-
-            case "Ноябрь":
-                secSearchMonth = 11;
-                break;
-
-            case "Декабрь":
-                secSearchMonth = 12;
-                break;
         }
     }
 }

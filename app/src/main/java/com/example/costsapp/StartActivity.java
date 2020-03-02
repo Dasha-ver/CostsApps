@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -20,6 +23,7 @@ public class StartActivity extends Activity {
     String generalHint;
     Button enter;
     Spinner spinner;
+    ArrayList<BankCodeSpinnerInfo> mySpinnerInfo;
     private Realm bankCodeRealm;
 
     @Override
@@ -39,11 +43,30 @@ public class StartActivity extends Activity {
         Realm.setDefaultConfiguration(config);
         bankCodeRealm = Realm.getDefaultInstance();
 
+        mySpinnerInfo = spinnerList();
+        BankCodeSpinnerAdapter Adapter = new BankCodeSpinnerAdapter(this, android.R.layout.simple_spinner_item, mySpinnerInfo);
+        spinner.setAdapter(Adapter);
+
+
+        //слушатель на спиннер
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (spinner.getSelectedItem() != null) {
+                    selected = spinner.getSelectedItem().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         //получаем выбранное значение спиннера, преобразовываем в банковский код, добавляем в БД,
         //передаём его в FirstActivity
         enter.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                selected = spinner.getSelectedItem().toString();
                 getHint(selected);
                 addBankCode(generalHint);
                 Intent intent = new Intent(StartActivity.this, FirstActivity.class);
@@ -51,6 +74,17 @@ public class StartActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    public ArrayList<BankCodeSpinnerInfo> spinnerList() {
+        ArrayList<BankCodeSpinnerInfo> mySpinnerInfo = new ArrayList<BankCodeSpinnerInfo>();
+        mySpinnerInfo.add(new BankCodeSpinnerInfo("Манаты"));
+        mySpinnerInfo.add(new BankCodeSpinnerInfo("Доллары"));
+        mySpinnerInfo.add(new BankCodeSpinnerInfo("Евро"));
+        mySpinnerInfo.add(new BankCodeSpinnerInfo("Рубли"));
+        mySpinnerInfo.add(new BankCodeSpinnerInfo("Гривны"));
+
+        return mySpinnerInfo;
     }
 
     //метод для преобразования выбранного значения спиннера в банковский код

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,7 +29,7 @@ import io.realm.RealmResults;
 
 public class SecondActivity extends Activity implements GetMyItem {
 
-    int numberOfColumns = 2;
+    int numberOfColumns = 3;
     boolean flag = true;
     String amount;
     Calendar calendar;
@@ -93,7 +92,6 @@ public class SecondActivity extends Activity implements GetMyItem {
         addCategory("Электороника");
 
         showCode();//получаем банковский код
-        generalExpenses.setHint(codeResult);
 
         //вызываем конструктор адаптера, через интерфейс получаем расходы введённые в категориях,
         //проверяем была ли первой введена точка или пустое ли поле, если нет -

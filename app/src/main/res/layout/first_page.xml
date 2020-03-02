@@ -1,112 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Chocolate"
+    android:background="@color/SkyBlue"
     tools:context=".FirstActivity"
-    tools:showIn="@layout/first_page">
+    tools:showIn="@layout/first_page"
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    <TextView
+        android:id="@+id/first_page_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:text="@string/enter_money"
+        android:textColor="@color/White"
+        android:textSize="35dp"
+        android:layout_gravity="center"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/first_page_second_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/enter_money_second"
+        android:textColor="@color/White"
+        android:textSize="35dp"
+        android:textAllCaps="false"/>
+
+    <EditText
+        android:id="@+id/edit_first_page"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        card_view:cardCornerRadius="20dp">
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/transparent_button"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
+        android:textSize="30dp"
+        android:inputType="numberDecimal"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/SkyBlue">
+    <Button
+        android:id="@+id/enter_first_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/for_first_button"
+        android:padding="10dp"
+        android:text="@string/button"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/first_page_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="180dp"
-                android:text="@string/enter_money"
-                android:textColor="@color/White"
-                android:textSize="35dp"
-                android:textStyle="italic" />
+    <Button
+        android:id="@+id/but_go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/bluegradient"
+        android:text="@string/go"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/first_page_second_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/first_page_text"
-                android:layout_centerHorizontal="true"
-                android:text="@string/enter_money_second"
-                android:textColor="@color/White"
-                android:textSize="35dp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/hint_first_string"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/first_page_second_text"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:text="@string/hint_first_string"
-                android:textColor="@color/Chocolate"
-                android:textSize="10dp" />
-
-            <TextView
-                android:id="@+id/hint_second_string"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/hint_first_string"
-                android:layout_centerHorizontal="true"
-                android:text="@string/hint_second_string"
-                android:textColor="@color/Chocolate"
-                android:textSize="10dp" />
-
-            <EditText
-                android:id="@+id/edit_first_page"
-                android:layout_width="230dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/hint_second_string"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text"
-                android:inputType="numberDecimal"
-                android:padding="10dp"
-                android:textColorHint="@color/LightSlateGray"
-                android:textSize="20dp" />
-
-            <Button
-                android:id="@+id/enter_first_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edit_first_page"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/for_first_button"
-                android:padding="15dp"
-                android:text="@string/button"
-                android:textAllCaps="false"
-                android:textColor="@color/White"
-                android:textSize="25dp"
-                android:textStyle="italic" />
-
-            <Button
-                android:id="@+id/but_go"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edit_text"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="@string/go"
-                android:textAllCaps="false"
-                android:textColor="@color/SkyBlue"
-                android:textSize="20dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-
-</RelativeLayout>
+</LinearLayout>

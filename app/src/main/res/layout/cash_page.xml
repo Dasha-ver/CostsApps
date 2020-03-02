@@ -1,64 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Chocolate">
+    android:background="@color/SkyBlue"
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <ImageButton
+        android:id="@+id/cash_home"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_home_black_24dp" />
+
+    <TextView
+        android:id="@+id/cash_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_gravity="center"
+        android:text="@string/cash_res"
+        android:textColor="@color/White"
+        android:textSize="35dp"
+        android:layout_marginTop="220dp"/>
+
+    <EditText
+        android:id="@+id/cash_edit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        card_view:cardCornerRadius="20dp">
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/transparent_button"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
+        android:textSize="30dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/SkyBlue">
+    <Button
+        android:id="@+id/control_spent_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/bluegradient"
+        android:text="@string/controlCosts"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
 
-            <ImageButton
-                android:id="@+id/cash_home"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/ic_home_black_24dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                />
+    <Button
+        android:id="@+id/control_income_cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bluegradient"
+        android:text="@string/controlIncomeThird"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/cash_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="240dp"
-                android:text="@string/cash_res"
-                android:textColor="@color/White"
-                android:textSize="35dp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/cash_edit"
-                android:layout_width="220dp"
-                android:layout_height="60dp"
-                android:layout_below="@+id/cash_text"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/edit_text" />
-
-            <Button
-                android:id="@+id/cash_button"
-                android:layout_width="250dp"
-                android:layout_height="60dp"
-                android:layout_below="@id/cash_edit"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80dp"
-                android:background="@drawable/for_first_button"
-                android:text="@string/but_third"
-                android:textAllCaps="false"
-                android:textColor="@color/White"
-                android:textSize="25dp" />
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+</LinearLayout>

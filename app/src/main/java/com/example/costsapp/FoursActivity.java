@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +33,8 @@ public class FoursActivity extends Activity {
     Button goSpent;
     EditText firstEdit;
     EditText different;
+    ArrayList<FoursPageSpinnerInfo> mySpinnerInfo;
+    ArrayList<FoursPageSpinnerInfo> mySpinnerInfoYears;
     private Realm incomeRealm;
     private Realm realm;
     private Realm bankCodeRealm;
@@ -58,9 +61,46 @@ public class FoursActivity extends Activity {
         goCash = findViewById(R.id.cash);
         goSpent = findViewById(R.id.button_go_spent);
 
+        mySpinnerInfo = spinnerList();
+        mySpinnerInfoYears = spinnerListYears();
+
+        MonthsSpinnerAdapter Adapter = new MonthsSpinnerAdapter(this, android.R.layout.simple_spinner_item, mySpinnerInfo);
+        incomeMonth.setAdapter(Adapter);
+
+        YearsSpinnerAdapter AdapterYears = new YearsSpinnerAdapter(this, android.R.layout.simple_spinner_item, mySpinnerInfoYears);
+        incomeYear.setAdapter(AdapterYears);
+
         showCode();//получаем банковский код
         firstEdit.setHint(codeResult);
         different.setHint(codeResult);
+
+        incomeMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (incomeMonth.getSelectedItem() != null) {
+                    selectedMonth = incomeMonth.getSelectedItem().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        incomeYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (incomeYear.getSelectedItem() != null) {
+                    selectedYear = incomeYear.getSelectedItem().toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         //показываем доходы за определённые месяц, рассчитываем и показываем разницу "доход/расход"
@@ -73,8 +113,6 @@ public class FoursActivity extends Activity {
                 String difForMonth="";
                 ArrayList<Integer>list = new ArrayList<>();
                 ArrayList<Double>listSpentForMonth = new ArrayList<>();
-                selectedMonth = incomeMonth.getSelectedItem().toString();
-                selectedYear = incomeYear.getSelectedItem().toString();
                 getSelectedMonthForOneMonth();
                 year = Integer.valueOf(selectedYear);
 
@@ -164,6 +202,34 @@ public class FoursActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    public ArrayList<FoursPageSpinnerInfo> spinnerList() {
+        ArrayList<FoursPageSpinnerInfo> mySpinnerInfo = new ArrayList<FoursPageSpinnerInfo>();
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Январь"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Февраль"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Март"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Апрель"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Май"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Июнь"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Июль"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Август"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Сентябрь"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Октябрь"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Ноябрь"));
+        mySpinnerInfo.add(new FoursPageSpinnerInfo("Декабрь"));
+
+        return mySpinnerInfo;
+    }
+
+    public ArrayList<FoursPageSpinnerInfo> spinnerListYears() {
+        ArrayList<FoursPageSpinnerInfo> mySpinnerInfoYears = new ArrayList<FoursPageSpinnerInfo>();
+        mySpinnerInfoYears.add(new FoursPageSpinnerInfo("2020"));
+        mySpinnerInfoYears.add(new FoursPageSpinnerInfo("2021"));
+        mySpinnerInfoYears.add(new FoursPageSpinnerInfo("2022"));
+        mySpinnerInfoYears.add(new FoursPageSpinnerInfo("2023"));
+
+        return mySpinnerInfoYears;
     }
 
     //метод для получения банковского кода

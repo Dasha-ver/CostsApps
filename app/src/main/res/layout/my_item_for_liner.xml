@@ -12,33 +12,34 @@
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         card_view:cardCornerRadius="5dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bluegradient"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/avatar_liner"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center|left"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:background="@drawable/food" />
+                android:background="@drawable/food"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/name_liner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
                 android:text="fff"
-                android:layout_below="@+id/avatar_liner"
-                android:textColor="@color/SkyBlue"
-                android:textSize="15dp"
-                android:layout_centerHorizontal="true"/>
+                android:textColor="@color/White"
+                android:textSize="17dp" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

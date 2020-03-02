@@ -5,6 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 //класс старта приложения
 
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);//назначаем toolbar функции actionbar
+
         Firsttimexecute();
     }
 
